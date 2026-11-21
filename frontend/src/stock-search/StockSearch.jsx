@@ -1,8 +1,7 @@
 
-
 import { useState } from 'react';
 import './StockSearch.css';
-import HistoricalData from './stock-search';
+import HistoricalData from '../historical-data/HistoricalData';
 
 function StockSearch() {
 

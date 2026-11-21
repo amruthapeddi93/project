@@ -1,7 +1,8 @@
 import os
+
 import requests
 from dotenv import load_dotenv
- 
+
 load_dotenv()
  
 API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")

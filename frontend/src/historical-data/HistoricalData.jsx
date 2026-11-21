@@ -1,7 +1,6 @@
 
 import React from 'react';
 import './HistoricalData.css';
-import HistoricalData from './stock-search';
 function HistoricalData({
   company,
   period,
@@ -55,6 +54,7 @@ function HistoricalData({
     ];
 
     return (
+      
       <div className="historical-table-section">
 
         <h3>{title}</h3>
@@ -109,6 +109,7 @@ function HistoricalData({
 
   return ( 
     <>
+       
       {loading && (
         <p>Loading historical stock data...</p>
       )}
