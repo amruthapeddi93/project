@@ -1,0 +1,171 @@
+
+/* Main Stock Search Container */
+.stock-search-container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 55px auto;
+  padding: 35px;
+  background: #111c30;
+  border: 1px solid #263751;
+  border-radius: 18px;
+  color: #ffffff;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+}
+
+/* Heading */
+.stock-search-container > h2 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #f8fafc;
+  letter-spacing: 0.3px;
+}
+
+.stock-search-description {
+  color: #94a3b8;
+  font-size: 15px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+/* Search Form */
+.stock-search-form {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.stock-search-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 18px;
+  border: 1px solid #344761;
+  border-radius: 10px;
+  background: #0b1425;
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.stock-search-form input::placeholder {
+  color: #64748b;
+}
+
+.stock-search-form input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Search Button */
+.stock-search-form button {
+  padding: 15px 28px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.stock-search-form button:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.stock-search-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error Message */
+.stock-search-error {
+  margin-top: 20px;
+  padding: 13px 16px;
+  border-radius: 9px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  font-size: 14px;
+}
+
+/* Results Section */
+.stock-results {
+  margin-top: 38px;
+}
+
+.stock-results > h3 {
+  font-size: 21px;
+  margin-bottom: 20px;
+  color: #e2e8f0;
+}
+
+/* Company Result Card */
+.stock-result-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 23px;
+  margin-bottom: 15px;
+  border: 1px solid #293b55;
+  border-radius: 13px;
+  background: #17253b;
+  transition: 0.3s ease;
+}
+
+.stock-result-card:hover {
+  border-color: #3b82f6;
+  background: #1b2d47;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+}
+
+.stock-result-card h3 {
+  font-size: 19px;
+  color: #f8fafc;
+  margin-bottom: 9px;
+}
+
+.stock-result-card p {
+  font-size: 14px;
+  color: #94a3b8;
+  margin: 7px 0;
+}
+
+.stock-result-details {
+  text-align: right;
+}
+
+/* Responsive Design */
+@media (max-width: 650px) {
+  .stock-search-container {
+    width: 94%;
+    padding: 22px;
+    margin: 30px auto;
+  }
+
+  .stock-search-container > h2 {
+    font-size: 25px;
+  }
+
+  .stock-search-form {
+    flex-direction: column;
+  }
+
+  .stock-search-form button {
+    width: 100%;
+  }
+
+  .stock-result-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stock-result-details {
+    text-align: left;
+  }
+}

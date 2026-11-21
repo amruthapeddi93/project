@@ -1,0 +1,361 @@
+
+/* =========================================
+   HISTORICAL DATA - PREMIUM DASHBOARD
+========================================= */
+
+.historical-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 35px 5%;
+  background: #0b1120;
+  color: #e8edf7;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  animation: pageEnter 0.4s ease;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* BACK BUTTON */
+
+.historical-container .back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 19px;
+  border: 1px solid #293750;
+  border-radius: 10px;
+  background: #141e30;
+  color: #c8d5eb;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.historical-container .back-button:hover {
+  background: #1d2b43;
+  border-color: #4d91ff;
+  color: #ffffff;
+  transform: translateX(-3px);
+}
+
+/* COMPANY HEADER */
+
+.historical-header {
+  width: 100%;
+  margin-top: 30px;
+  padding: 30px 34px;
+  border: 1px solid #263653;
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(49, 112, 220, 0.19),
+      transparent 40%
+    ),
+    linear-gradient(135deg, #17243a, #111a2b);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.22);
+}
+
+.historical-header h2 {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 750;
+  letter-spacing: -0.8px;
+}
+
+.historical-header p {
+  margin: 0;
+  color: #91a5c3;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+}
+
+/* PERIOD SELECTION */
+
+.period-selection {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 28px 0;
+  padding: 22px 25px;
+  border: 1px solid #263653;
+  border-radius: 15px;
+  background: #121d30;
+}
+
+.period-selection label {
+  color: #dce6f6;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.period-selection select {
+  min-width: 180px;
+  padding: 12px 16px;
+  border: 1px solid #344765;
+  border-radius: 9px;
+  outline: none;
+  background: #1a2940;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.period-selection select:focus {
+  border-color: #4d91ff;
+  box-shadow: 0 0 0 3px rgba(77, 145, 255, 0.12);
+}
+
+.period-selection select option {
+  background: #17243a;
+  color: #ffffff;
+}
+
+/* HISTORICAL DATA SECTION */
+
+.historical-table-section {
+  width: 100%;
+  margin-top: 28px;
+  padding: 28px;
+  border: 1px solid #263653;
+  border-radius: 17px;
+  background: #121d30;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.historical-table-section h3 {
+  margin: 0 0 9px;
+  color: #ffffff;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.historical-table-section > p {
+  margin: 0 0 22px;
+  color: #8fa5c5;
+  font-size: 13px;
+}
+
+/* TABLE WRAPPER */
+
+.historical-table-wrapper {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid #293a55;
+  border-radius: 12px;
+  background: #111c2e;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* TABLE LAYOUT */
+
+.historical-table-wrapper table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: auto;
+  text-align: left;
+}
+
+/* TABLE HEADER */
+
+.historical-table-wrapper thead {
+  background: #1b2b43;
+}
+
+.historical-table-wrapper th {
+  padding: 16px 20px;
+  color: #9db7df;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: left;
+  border-bottom: 1px solid #293a55;
+}
+
+/* TABLE DATA */
+
+.historical-table-wrapper td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #253650;
+  color: #d8e2f1;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+.historical-table-wrapper tbody tr {
+  background: #111c2e;
+  transition: background 0.2s ease;
+}
+
+.historical-table-wrapper tbody tr:nth-child(even) {
+  background: #152238;
+}
+
+.historical-table-wrapper tbody tr:hover {
+  background: rgba(66, 133, 244, 0.12);
+}
+
+.historical-table-wrapper tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* FINANCIAL INFORMATION */
+
+.financial-information {
+  width: 100%;
+  margin-top: 40px;
+}
+
+.financial-information > h2 {
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #263653;
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+/* PROFILE AND STATEMENT HEADINGS */
+
+.financial-information h3 {
+  margin: 0 0 16px;
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 650;
+}
+
+/* PROFILE TABLE FIRST COLUMN */
+
+.financial-information .historical-table-wrapper td:first-child {
+  min-width: 210px;
+  color: #93c5fd;
+  font-weight: 600;
+}
+
+/* FINANCIAL STATEMENT TABLE COLUMNS */
+
+.financial-information .historical-table-wrapper table {
+  min-width: 850px;
+}
+
+.financial-information .historical-table-wrapper th:first-child,
+.financial-information .historical-table-wrapper td:first-child {
+  min-width: 240px;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #17243a;
+}
+
+.financial-information .historical-table-wrapper thead th:first-child {
+  z-index: 2;
+  background: #1b2b43;
+}
+
+.financial-information .historical-table-wrapper tbody tr:nth-child(even) td:first-child {
+  background: #1a2a42;
+}
+
+.financial-information .historical-table-wrapper tbody tr:hover td:first-child {
+  background: #203653;
+}
+
+/* LOADING AND ERROR */
+
+.historical-container > p {
+  margin-top: 25px;
+  color: #a8bad4;
+  font-size: 14px;
+}
+
+.historical-error {
+  margin-top: 22px;
+  padding: 16px 20px;
+  border: 1px solid rgba(239, 83, 80, 0.3);
+  border-radius: 10px;
+  background: rgba(239, 83, 80, 0.08);
+  color: #ff8c8c;
+  font-size: 14px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 768px) {
+  .historical-container {
+    padding: 22px 4%;
+  }
+
+  .historical-header {
+    margin-top: 25px;
+    padding: 24px;
+  }
+
+  .period-selection {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .period-selection select {
+    width: 100%;
+  }
+
+  .historical-table-section {
+    padding: 19px;
+  }
+
+  .historical-table-wrapper th,
+  .historical-table-wrapper td {
+    padding: 13px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .historical-container {
+    padding: 18px 12px;
+  }
+
+  .historical-header h2 {
+    font-size: 24px;
+  }
+
+  .historical-table-section h3 {
+    font-size: 18px;
+  }
+
+  .back-button {
+    font-size: 13px;
+  }
+
+  .financial-information > h2 {
+    font-size: 21px;
+  }
+}

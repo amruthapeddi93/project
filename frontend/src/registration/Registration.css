@@ -1,0 +1,85 @@
+
+
+/* Main page */
+.registration-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f1f5f9;
+    font-family: Arial, sans-serif;
+}
+
+/* Registration form */
+.registration-form {
+    width: 350px;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.registration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: auto;
+}
+/* Heading */
+.registration-form h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #1e293b;
+}
+
+/* Labels */
+.registration-form label {
+    display: block;
+    margin-bottom: 7px;
+    margin-top: 15px;
+    color: #334155;
+    font-weight: 600;
+}
+
+/* Input fields */
+.registration-form input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Input focus */
+.registration-form input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 4px rgba(37, 99, 235, 0.3);
+}
+
+/* Register button */
+.registration-form button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 25px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Button hover */
+.registration-form button:hover {
+    background: #1d4ed8;
+}
+
+/* Error message */
+.error-message {
+    color: red;
+    font-size: 13px;
+    margin-top: 10px;
+}
