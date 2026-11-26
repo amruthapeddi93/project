@@ -9,11 +9,7 @@ API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")
 
 url = "https://www.alphavantage.co/query"
 
-params = {
-    "function": "TIME_SERIES_DAILY",
-    "symbol": "INFY.BSE",
-    "apikey": API_KEY
-}
+params = {"function": "TIME_SERIES_DAILY", "symbol": "INFY.BSE", "apikey": API_KEY}
 
 response = requests.get(url, params=params)
 

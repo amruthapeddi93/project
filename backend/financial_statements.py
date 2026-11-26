@@ -87,11 +87,15 @@ def get_financial_statement(stock, statement_type: str, frequency: str = "yearly
     try:
         if statement_type == "income_statement":
             statement = (
-                stock.income_stmt if frequency == "yearly" else stock.quarterly_income_stmt
+                stock.income_stmt
+                if frequency == "yearly"
+                else stock.quarterly_income_stmt
             )
         elif statement_type == "balance_sheet":
             statement = (
-                stock.balance_sheet if frequency == "yearly" else stock.quarterly_balance_sheet
+                stock.balance_sheet
+                if frequency == "yearly"
+                else stock.quarterly_balance_sheet
             )
         elif statement_type == "cash_flow":
             statement = (
@@ -120,10 +124,12 @@ def get_financial_statement(stock, statement_type: str, frequency: str = "yearly
                 )
                 values[period_name] = clean_value(statement.loc[metric, period])
 
-            records.append({
-                "metric": str(metric),
-                "values": values,
-            })
+            records.append(
+                {
+                    "metric": str(metric),
+                    "values": values,
+                }
+            )
 
         return {
             "success": True,

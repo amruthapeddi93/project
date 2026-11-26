@@ -1,16 +1,17 @@
 import os
 from datetime import UTC, datetime
+from typing import Any
 
 import requests
 
 ALPHA_VANTAGE_API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")
-
 ALPHA_VANTAGE_URL = "https://www.alphavantage.co/query"
 
 
-def clean_value(value):
+def clean_value(value: Any) -> Any:
+    """Convert numeric strings into integers or floats."""
 
-    if value is None or value == "" or value == "None" or value == "-":
+    if value is None or value in ("", "None", "-"):
         return None
 
     try:
@@ -25,21 +26,29 @@ def clean_value(value):
         return value
 
 
-def fetch_alpha_vantage_data(function, ticker):
-    """
-    Fetch information from Alpha Vantage API.
-    """
+def fetch_alpha_vantage_data(function: str, ticker: str) -> dict[str, Any]:
+    """Fetch information from the Alpha Vantage API."""
 
     if not ALPHA_VANTAGE_API_KEY:
         raise ValueError("Alpha Vantage API key is not configured")
 
-    params = {"function": function, "symbol": ticker, "apikey": ALPHA_VANTAGE_API_KEY}
+    params = {
+        "function": function,
+        "symbol": ticker,
+        "apikey": ALPHA_VANTAGE_API_KEY,
+    }
 
-    response = requests.get(ALPHA_VANTAGE_URL, params=params, timeout=30)
-
+    response = requests.get(
+        ALPHA_VANTAGE_URL,
+        params=params,
+        timeout=30,
+    )
     response.raise_for_status()
 
     result = response.json()
+
+    if not isinstance(result, dict):
+        raise TypeError("Alpha Vantage returned an invalid response.")
 
     if "Error Message" in result:
         raise ValueError(result["Error Message"])
@@ -53,10 +62,8 @@ def fetch_alpha_vantage_data(function, ticker):
     return result
 
 
-def get_company_profile(ticker: str):
-    """
-    Retrieve company profile information using Alpha Vantage.
-    """
+def get_company_profile(ticker: str) -> dict[str, Any]:
+    """Retrieve company profile information using Alpha Vantage."""
 
     try:
         result = fetch_alpha_vantage_data("OVERVIEW", ticker)
@@ -87,7 +94,6 @@ def get_company_profile(ticker: str):
             "dividend_yield": clean_value(result.get("DividendYield")),
             "pe_ratio": clean_value(result.get("PERatio")),
             "eps": clean_value(result.get("EPS")),
-            # Additional financial ratios
             "book_value": clean_value(result.get("BookValue")),
             "profit_margin": clean_value(result.get("ProfitMargin")),
             "operating_margin": clean_value(result.get("OperatingMarginTTM")),
@@ -104,15 +110,15 @@ def get_company_profile(ticker: str):
             "data": profile,
         }
 
-    except Exception as e:
+    except (requests.RequestException, ValueError, TypeError) as error:
         return {
             "success": False,
-            "message": f"Unable to retrieve company profile: {e!s}",
+            "message": f"Unable to retrieve company profile: {error!s}",
             "data": None,
         }
 
 
-def get_financial_statement(ticker: str, statement_type: str):
+def get_financial_statement(ticker: str, statement_type: str) -> dict[str, Any]:
     """
     Retrieve income statement, balance sheet or cash flow
     using Alpha Vantage.
@@ -140,14 +146,18 @@ def get_financial_statement(ticker: str, statement_type: str):
         if not annual_reports and not quarterly_reports:
             return {
                 "success": False,
-                "message": f"{statement_type.replace('_', ' ').title()} is unavailable.",
+                "message": (
+                    f"{statement_type.replace('_', ' ').title()} " "is unavailable."
+                ),
                 "data": None,
             }
 
-        records = {}
+        records: dict[str, dict[str, Any]] = {}
 
-        # Process annual reports
+        # Process annual reports.
         for report in annual_reports:
+            if not isinstance(report, dict):
+                continue
 
             period = report.get("fiscalDateEnding")
 
@@ -157,8 +167,7 @@ def get_financial_statement(ticker: str, statement_type: str):
             period_name = f"{period} (Annual)"
 
             for metric, value in report.items():
-
-                if metric in ["fiscalDateEnding", "reportedCurrency"]:
+                if metric in ("fiscalDateEnding", "reportedCurrency"):
                     continue
 
                 if metric not in records:
@@ -166,8 +175,10 @@ def get_financial_statement(ticker: str, statement_type: str):
 
                 records[metric][period_name] = clean_value(value)
 
-        # Process quarterly reports
+        # Process quarterly reports.
         for report in quarterly_reports:
+            if not isinstance(report, dict):
+                continue
 
             period = report.get("fiscalDateEnding")
 
@@ -177,8 +188,7 @@ def get_financial_statement(ticker: str, statement_type: str):
             period_name = f"{period} (Quarterly)"
 
             for metric, value in report.items():
-
-                if metric in ["fiscalDateEnding", "reportedCurrency"]:
+                if metric in ("fiscalDateEnding", "reportedCurrency"):
                     continue
 
                 if metric not in records:
@@ -186,33 +196,31 @@ def get_financial_statement(ticker: str, statement_type: str):
 
                 records[metric][period_name] = clean_value(value)
 
-        statement_data = []
-
-        for metric, values in records.items():
-            statement_data.append({"metric": metric, "values": values})
+        statement_data = [
+            {"metric": metric, "values": values} for metric, values in records.items()
+        ]
 
         return {
             "success": True,
-            "message": f"{statement_type.replace('_', ' ').title()} retrieved successfully.",
+            "message": (
+                f"{statement_type.replace('_', ' ').title()} " "retrieved successfully."
+            ),
             "total_metrics": len(statement_data),
             "data": statement_data,
         }
 
-    except Exception as e:
+    except (requests.RequestException, ValueError, TypeError) as error:
         return {
             "success": False,
-            "message": f"Unable to retrieve {statement_type}: {e!s}",
+            "message": f"Unable to retrieve {statement_type}: {error!s}",
             "data": None,
         }
 
 
-def get_company_financial_information(ticker: str):
-    """
-    Retrieve company profile and financial statements.
-    """
+def get_company_financial_information(ticker: str) -> dict[str, Any]:
+    """Retrieve company profile and financial statements."""
 
     try:
-
         profile = get_company_profile(ticker)
 
         income_statement = get_financial_statement(ticker, "income_statement")
@@ -233,10 +241,12 @@ def get_company_financial_information(ticker: str):
             },
         }
 
-    except Exception as e:
+    except (requests.RequestException, ValueError, TypeError) as error:
         return {
             "success": False,
             "ticker": ticker.upper(),
-            "message": ("Unable to retrieve company financial information: " + str(e)),
+            "message": (
+                "Unable to retrieve company financial information: " + str(error)
+            ),
             "data": None,
         }

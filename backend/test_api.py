@@ -1,4 +1,3 @@
-
 import os
 
 import requests
@@ -17,7 +16,7 @@ else:
         "function": "TIME_SERIES_DAILY",
         "symbol": "IBM",
         "outputsize": "compact",
-        "apikey": api_key
+        "apikey": api_key,
     }
 
     response = requests.get(url, params=params, timeout=30)

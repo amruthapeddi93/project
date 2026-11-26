@@ -1,43 +1,43 @@
+import { useState } from "react";
 
-import { useState } from 'react';
+import Registration from "./registration/Registration";
+import Login from "./Login/Login";
+import StockSearch from "./stock-search/StockSearch";
+import NewsAgent from "./news-agent/NewsAgent";
 
-import Registration from './registration/Registration';
-import Login from './Login/Login';
-import StockSearch from './stock-search/StockSearch';
-
-import './App.css';
+import "./App.css";
 
 function App() {
-
   const [showLogin, setShowLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [activePage, setActivePage] = useState("stocks");
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // After successful registration
   const handleRegistrationSuccess = () => {
     setShowLogin(true);
   };
 
-  // After successful login
   const handleLoginSuccess = () => {
-    console.log("App: Login callback received");
-
     setIsLoggedIn(true);
+    setActivePage("stocks");
   };
 
-  // Logout
   const handleLogout = () => {
     localStorage.removeItem("access_token");
-
     setIsLoggedIn(false);
     setShowLogin(true);
+    setActivePage("stocks");
+    setMenuOpen(false);
+  };
+
+  const navigateTo = (page) => {
+    setActivePage(page);
+    setMenuOpen(false);
   };
 
   return (
     <div className="app-container">
-
-      {/* NAVBAR */}
       <nav className="navbar">
-
         <div className="brand">
           <h2>
             Stock<span>Research</span>
@@ -45,88 +45,89 @@ function App() {
         </div>
 
         {!isLoggedIn ? (
-
           <div className="nav-buttons">
-
             <button
-              className={!showLogin ? 'active' : ''}
+              className={!showLogin ? "active" : ""}
               onClick={() => setShowLogin(false)}
             >
               Register
             </button>
 
             <button
-              className={showLogin ? 'active' : ''}
+              className={showLogin ? "active" : ""}
               onClick={() => setShowLogin(true)}
             >
               Login
             </button>
-
           </div>
-
         ) : (
-
-          <div className="nav-buttons">
-            <button onClick={handleLogout}>
-              Logout
+          <div className="nav-menu-container">
+            <button
+              className="hamburger-button"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Open navigation menu"
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? "✕" : "☰"}
             </button>
+
+            {menuOpen && (
+              <div className="dropdown-menu">
+                <button
+                  className={activePage === "stocks" ? "selected" : ""}
+                  onClick={() => navigateTo("stocks")}
+                >
+                  Stock Research
+                </button>
+
+                <button
+                  className={activePage === "news" ? "selected" : ""}
+                  onClick={() => navigateTo("news")}
+                >
+                  News & Sentiment
+                </button>
+
+                <button onClick={handleLogout}>Logout</button>
+              </div>
+            )}
           </div>
-
         )}
-
       </nav>
 
-      {/* MAIN CONTENT */}
       <main className="main-content">
-
         {isLoggedIn ? (
-
-          <StockSearch />
-
+          activePage === "stocks" ? (
+            <StockSearch />
+          ) : (
+            <NewsAgent />
+          )
         ) : (
-
           <>
             <div className="welcome-section">
-
-              <h1>
-                Welcome to Smart Stock Research
-              </h1>
+              <h1>Welcome to Smart Stock Research</h1>
 
               <p>
-                Make smarter investment decisions with
-                AI-powered stock analysis and insights.
+                Make smarter investment decisions with AI-powered stock analysis
+                and insights.
               </p>
-
             </div>
 
             <div className="form-section">
-
               {showLogin ? (
-
-                <Login
-                  onLoginSuccess={handleLoginSuccess}
-                />
-
+                <Login onLoginSuccess={handleLoginSuccess} />
               ) : (
-
                 <Registration
                   onRegistrationSuccess={handleRegistrationSuccess}
                 />
-
               )}
-
             </div>
           </>
-
         )}
-
       </main>
 
-      {/* FOOTER */}
       <footer className="footer">
         © 2026 AI-Powered Stock Research System
       </footer>
-
     </div>
   );
 }

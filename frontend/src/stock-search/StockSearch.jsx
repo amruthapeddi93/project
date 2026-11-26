@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import './StockSearch.css';
 import HistoricalData from '../historical-data/HistoricalData';
-
+import NewsAgent from "../news-agent/NewsAgent";
 function StockSearch() {
 
   const [query, setQuery] = useState('');
@@ -220,8 +220,18 @@ function StockSearch() {
   };
 
   // Display historical and financial information
-  if (selectedCompany) {
-    return (
+  
+if (selectedCompany) {
+  const newsSymbol = selectedCompany.symbol.replace(/\.(BSE|NS|BO)$/i, "");
+
+  const newsMarket =
+    selectedCompany.exchange === "India - NSE" ||
+    selectedCompany.exchange === "India/Bombay"
+      ? "india"
+      : "us";
+
+  return (
+    <>
       <HistoricalData
         company={selectedCompany}
         period={period}
@@ -234,8 +244,12 @@ function StockSearch() {
         financialError={financialError}
         onBack={handleBack}
       />
-    );
-  }
+
+      <NewsAgent symbol={newsSymbol} market={newsMarket} />
+    </>
+  );
+}
+
 
   // Display search screen
   return (
